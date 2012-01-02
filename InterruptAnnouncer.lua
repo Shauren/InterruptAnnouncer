@@ -29,8 +29,8 @@ local interr = CreateFrame("Frame", "InterruptTrackerFrame", UIParent);
 interr:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 interr:SetScript("OnEvent", function(self, event, ...)
     if (event == "COMBAT_LOG_EVENT_UNFILTERED") then
-        local type, _, _, sourceName, sourceFlags, _, destGUID, destName, _, destRaidFlags, spellId, spellName, _ = select(2, ...);
-        if (type == "SPELL_INTERRUPT" and bit.band(sourceFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) ~= 0) then
+        local type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, destRaidFlags, spellId, spellName, _ = select(2, ...);
+        if (type == "SPELL_INTERRUPT" and UnitGUID("player") == sourceGUID) then
             local extraSpellID, extraSpellName = select(15, ...);
             local destIcon = "";
             if (destName) then
