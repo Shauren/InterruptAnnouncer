@@ -1,6 +1,8 @@
 ﻿local UnitGUID = UnitGUID;
 local GetNumRaidMembers = GetNumRaidMembers;
 local GetNumPartyMembers = GetNumPartyMembers;
+local IsInInstance = IsInInstance;
+local InstanceType = "none"
 local CTL = _G.ChatThrottleLib;
 local TEXT_SPELL_LINK = "\124cff71d5ff\124Hspell:%s\124h[%s]\124h\124r";
 local RaidIconMaskToIndex =
@@ -27,6 +29,7 @@ end
 
 local interr = CreateFrame("Frame", "InterruptTrackerFrame", UIParent);
 interr:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+interr:RegisterEvent("PLAYER_ENTERING_WORLD");
 interr:SetScript("OnEvent", function(self, event, ...)
     if (event == "COMBAT_LOG_EVENT_UNFILTERED") then
         local type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, destRaidFlags, spellId, spellName, _ = select(2, ...);
@@ -49,7 +52,11 @@ interr:SetScript("OnEvent", function(self, event, ...)
             
             local msgType = "PARTY";
             if (GetNumRaidMembers() > 0) then
-                msgType = "RAID";
+                if (InstanceType == "pvp") then
+                    msgType = "BATTLEGROUND";
+                else
+                    msgType = "RAID";
+                end
             elseif (GetNumPartyMembers() < 1) then
                 DEFAULT_CHAT_FRAME:AddMessage(msg);
                 return;
@@ -59,5 +66,7 @@ interr:SetScript("OnEvent", function(self, event, ...)
                 CTL:SendChatMessage("ALERT", "IA", msg, msgType);
             end
         end
+    elseif (event == "PLAYER_ENTERING_WORLD") then
+        _, InstanceType = IsInInstance();
     end
 end);
