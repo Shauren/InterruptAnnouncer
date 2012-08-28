@@ -43,21 +43,21 @@ interr:SetScript("OnEvent", function(self, event, ...)
             local interruptingSpell = format(TEXT_SPELL_LINK, spellId, spellName);
             local interruptedSpell = format(TEXT_SPELL_LINK, extraSpellID, extraSpellName);
             local msg = "";
-            if (GetNumPartyMembers() < 1 and GetNumRaidMembers() < 1) then
+            if (IsInGroup()) then
+                msg = interruptingSpell.." interrupted "..destIcon..destName.."'s "..interruptedSpell.."!";
+            else
                 local destStr = format(TEXT_MODE_A_STRING_SOURCE_UNIT, "", destGUID, destName, destName); -- empty icon, destRaidFlags = 0 when solo
                 msg = "\124cffff4809"..sourceName..": \124r"..interruptingSpell.." \124cffff4809interrupted "..destStr.."'s\124r "..interruptedSpell.."\124cffff4809!\124r";
-            else
-                msg = interruptingSpell.." interrupted "..destIcon..destName.."'s "..interruptedSpell.."!";
             end
             
             local msgType = "PARTY";
-            if (GetNumRaidMembers() > 0) then
+            if (GetNumGroupMembers() > 0) then
                 if (InstanceType == "pvp") then
                     msgType = "BATTLEGROUND";
-                else
+                elseif (IsInRaid()) then
                     msgType = "RAID";
                 end
-            elseif (GetNumPartyMembers() < 1) then
+            else
                 DEFAULT_CHAT_FRAME:AddMessage(msg);
                 return;
             end
