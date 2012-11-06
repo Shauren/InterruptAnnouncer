@@ -2,7 +2,7 @@
 local GetNumRaidMembers = GetNumRaidMembers;
 local GetNumPartyMembers = GetNumPartyMembers;
 local IsInInstance = IsInInstance;
-local InstanceType = "none"
+local garbage, InstanceType = nil, "none"
 local CTL = _G.ChatThrottleLib;
 local TEXT_SPELL_LINK = "\124cff71d5ff\124Hspell:%s\124h[%s]\124h\124r";
 local RaidIconMaskToIndex =
@@ -67,6 +67,6 @@ interr:SetScript("OnEvent", function(self, event, ...)
             end
         end
     elseif (event == "PLAYER_ENTERING_WORLD") then
-        _, InstanceType = IsInInstance();
+        garbage, InstanceType = IsInInstance();
     end
 end);
