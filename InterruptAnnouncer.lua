@@ -39,7 +39,7 @@ interr:SetScript("OnEvent", function(self, event, ...)
             if (destName) then
                 destIcon = GetRaidIcon(destRaidFlags);
             end
-            
+
             local interruptingSpell = format(TEXT_SPELL_LINK, spellId, spellName);
             local interruptedSpell = format(TEXT_SPELL_LINK, extraSpellID, extraSpellName);
             local msg = "";
@@ -49,21 +49,22 @@ interr:SetScript("OnEvent", function(self, event, ...)
                 local destStr = format(TEXT_MODE_A_STRING_SOURCE_UNIT, "", destGUID, destName, destName); -- empty icon, destRaidFlags = 0 when solo
                 msg = "\124cffff4809"..sourceName..": \124r"..interruptingSpell.." \124cffff4809interrupted "..destStr.."'s\124r "..interruptedSpell.."\124cffff4809!\124r";
             end
-            
-            local msgType = "PARTY";
+
             if (GetNumGroupMembers() > 0) then
+                local msgType = "PARTY";
                 if (InstanceType == "pvp") then
                     msgType = "BATTLEGROUND";
-                elseif (IsInRaid()) then
+                elseif ((IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE)) and (InstanceType == "party" or InstanceType == "raid")) then -- Dungeon/Raid Finder
+                    msgType = "INSTANCE_CHAT";
+                elseif (IsInRaid(LE_PARTY_CATEGORY_HOME)) then
                     msgType = "RAID";
+                end
+
+                if (CTL) then
+                    CTL:SendChatMessage("ALERT", "IA", msg, msgType);
                 end
             else
                 DEFAULT_CHAT_FRAME:AddMessage(msg);
-                return;
-            end
-            
-            if (CTL) then
-                CTL:SendChatMessage("ALERT", "IA", msg, msgType);
             end
         end
     elseif (event == "PLAYER_ENTERING_WORLD") then
