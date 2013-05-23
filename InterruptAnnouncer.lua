@@ -2,7 +2,7 @@
 local GetNumRaidMembers = GetNumRaidMembers;
 local GetNumPartyMembers = GetNumPartyMembers;
 local IsInInstance = IsInInstance;
-local garbage, InstanceType = nil, "none"
+local InstanceType = "none"
 local CTL = _G.ChatThrottleLib;
 local TEXT_SPELL_LINK = "\124cff71d5ff\124Hspell:%s\124h[%s]\124h\124r";
 local RaidIconMaskToIndex =
@@ -62,12 +62,15 @@ interr:SetScript("OnEvent", function(self, event, ...)
 
                 if (CTL) then
                     CTL:SendChatMessage("ALERT", "IA", msg, msgType);
+                else
+                    SendChatMessage(msg, msgType); -- should NEVER happen
                 end
             else
                 DEFAULT_CHAT_FRAME:AddMessage(msg);
             end
         end
     elseif (event == "PLAYER_ENTERING_WORLD") then
-        garbage, InstanceType = IsInInstance();
+        local _, iType = IsInInstance();
+        InstanceType = iType;
     end
 end);
