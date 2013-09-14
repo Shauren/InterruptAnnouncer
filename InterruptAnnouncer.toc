@@ -1,5 +1,5 @@
 ## Author: Shauren
-## Interface: 50300
+## Interface: 50400
 ## Notes: Announces your successful interrupts to party/raid
 ## Title: InterruptAnnouncer
 ## Version: 1.0
