@@ -4,7 +4,6 @@ local GetNumPartyMembers = GetNumPartyMembers;
 local IsInInstance = IsInInstance;
 local InstanceType = "none"
 local CTL = _G.ChatThrottleLib;
-local TEXT_SPELL_LINK = "\124cff71d5ff\124Hspell:%s\124h[%s]\124h\124r";
 local RaidIconMaskToIndex =
 {
 	[COMBATLOG_OBJECT_RAIDTARGET1] = 1,
@@ -32,16 +31,16 @@ interr:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 interr:RegisterEvent("PLAYER_ENTERING_WORLD");
 interr:SetScript("OnEvent", function(self, event, ...)
     if (event == "COMBAT_LOG_EVENT_UNFILTERED") then
-        local type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, destRaidFlags, spellId, spellName, _ = select(2, ...);
+        local type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, destRaidFlags, spellId = select(2, ...);
         if (type == "SPELL_INTERRUPT" and UnitGUID("player") == sourceGUID) then
-            local extraSpellID, extraSpellName = select(15, ...);
+            local extraSpellID = select(15, ...);
             local destIcon = "";
             if (destName) then
                 destIcon = GetRaidIcon(destRaidFlags);
             end
 
-            local interruptingSpell = format(TEXT_SPELL_LINK, spellId, spellName);
-            local interruptedSpell = format(TEXT_SPELL_LINK, extraSpellID, extraSpellName);
+            local interruptingSpell = GetSpellLink(spellId);
+            local interruptedSpell = GetSpellLink(extraSpellID);
             local msg = "";
             if (IsInGroup()) then
                 msg = interruptingSpell.." interrupted "..destIcon..destName.."'s "..interruptedSpell.."!";
