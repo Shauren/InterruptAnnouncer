@@ -1,4 +1,4 @@
-﻿local UnitGUID = UnitGUID;
+local UnitGUID = UnitGUID;
 local GetNumRaidMembers = GetNumRaidMembers;
 local GetNumPartyMembers = GetNumPartyMembers;
 local IsInInstance = IsInInstance;
@@ -31,9 +31,9 @@ interr:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 interr:RegisterEvent("PLAYER_ENTERING_WORLD");
 interr:SetScript("OnEvent", function(self, event, ...)
     if (event == "COMBAT_LOG_EVENT_UNFILTERED") then
-        local type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, destRaidFlags, spellId = select(2, ...);
+        local type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, destRaidFlags, spellId = select(2, CombatLogGetCurrentEventInfo());
         if (type == "SPELL_INTERRUPT" and UnitGUID("player") == sourceGUID) then
-            local extraSpellID = select(15, ...);
+            local extraSpellID = select(15, CombatLogGetCurrentEventInfo());
             local destIcon = "";
             if (destName) then
                 destIcon = GetRaidIcon(destRaidFlags);
