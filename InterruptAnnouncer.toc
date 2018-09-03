@@ -3,5 +3,4 @@
 ## Notes: Announces your successful interrupts to party/raid
 ## Title: InterruptAnnouncer
 ## Version: 1.0
-libs\ChatThrottleLib\ChatThrottleLib.xml
 InterruptAnnouncer.lua

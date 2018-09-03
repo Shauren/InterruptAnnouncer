@@ -3,7 +3,6 @@ local GetNumRaidMembers = GetNumRaidMembers;
 local GetNumPartyMembers = GetNumPartyMembers;
 local IsInInstance = IsInInstance;
 local InstanceType = "none"
-local CTL = _G.ChatThrottleLib;
 local RaidIconMaskToIndex =
 {
 	[COMBATLOG_OBJECT_RAIDTARGET1] = 1,
@@ -59,11 +58,7 @@ interr:SetScript("OnEvent", function(self, event, ...)
                     msgType = "RAID";
                 end
 
-                if (CTL) then
-                    CTL:SendChatMessage("ALERT", "IA", msg, msgType);
-                else
-                    SendChatMessage(msg, msgType); -- should NEVER happen
-                end
+                SendChatMessage(msg, msgType); -- should NEVER happen
             else
                 DEFAULT_CHAT_FRAME:AddMessage(msg);
             end

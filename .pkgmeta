@@ -1,6 +1,1 @@
 package-as: InterruptAnnouncer
-
-externals:
-    libs/ChatThrottleLib:
-        url: svn://svn.wowace.com/wow/chatthrottlelib/mainline/trunk
-        tag: latest
