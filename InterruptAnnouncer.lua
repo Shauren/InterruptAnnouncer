@@ -50,9 +50,7 @@ interr:SetScript("OnEvent", function(self, event, ...)
 
             if (GetNumGroupMembers() > 0) then
                 local msgType = "PARTY";
-                if (InstanceType == "pvp") then
-                    msgType = "BATTLEGROUND";
-                elseif ((IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE)) and (InstanceType == "party" or InstanceType == "raid" or InstanceType == "scenario")) then -- Dungeon/Raid Finder
+                if ((IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE)) and (InstanceType == "party" or InstanceType == "raid" or InstanceType == "pvp" or InstanceType == "scenario")) then -- Dungeon/Raid Finder/Battleground
                     msgType = "INSTANCE_CHAT";
                 elseif (IsInRaid(LE_PARTY_CATEGORY_HOME)) then
                     msgType = "RAID";
