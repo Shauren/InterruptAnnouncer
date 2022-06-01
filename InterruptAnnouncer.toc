@@ -1,5 +1,5 @@
 ## Author: Shauren
-## Interface: 90200
+## Interface: 90205
 ## Notes: Announces your successful interrupts to party/raid
 ## Title: InterruptAnnouncer
 ## Version: 1.0
