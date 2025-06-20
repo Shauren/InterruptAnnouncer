@@ -5,32 +5,32 @@ local GetSpellLink = C_Spell and C_Spell.GetSpellLink or GetSpellLink
 local InstanceType = "none"
 local RaidIconMaskToIndex =
 {
-	[COMBATLOG_OBJECT_RAIDTARGET1] = 1,
-	[COMBATLOG_OBJECT_RAIDTARGET2] = 2,
-	[COMBATLOG_OBJECT_RAIDTARGET3] = 3,
-	[COMBATLOG_OBJECT_RAIDTARGET4] = 4,
-	[COMBATLOG_OBJECT_RAIDTARGET5] = 5,
-	[COMBATLOG_OBJECT_RAIDTARGET6] = 6,
-	[COMBATLOG_OBJECT_RAIDTARGET7] = 7,
-	[COMBATLOG_OBJECT_RAIDTARGET8] = 8,
+    [COMBATLOG_OBJECT_RAIDTARGET1] = 1,
+    [COMBATLOG_OBJECT_RAIDTARGET2] = 2,
+    [COMBATLOG_OBJECT_RAIDTARGET3] = 3,
+    [COMBATLOG_OBJECT_RAIDTARGET4] = 4,
+    [COMBATLOG_OBJECT_RAIDTARGET5] = 5,
+    [COMBATLOG_OBJECT_RAIDTARGET6] = 6,
+    [COMBATLOG_OBJECT_RAIDTARGET7] = 7,
+    [COMBATLOG_OBJECT_RAIDTARGET8] = 8,
 };
 
 local function GetRaidIconForSentChatMessage(unitFlags)
-	-- Check for an appropriate icon for this unit
-	local raidTarget = bit_band(unitFlags, COMBATLOG_OBJECT_RAIDTARGET_MASK);
-	if (raidTarget == 0) then
-		return "";
-	end
+    -- Check for an appropriate icon for this unit
+    local raidTarget = bit_band(unitFlags, COMBATLOG_OBJECT_RAIDTARGET_MASK);
+    if (raidTarget == 0) then
+        return "";
+    end
 
-	return "{rt"..RaidIconMaskToIndex[raidTarget].."}";
+    return "{rt"..RaidIconMaskToIndex[raidTarget].."}";
 end
 
 local function GetRaidIconForLocalMessage(unitFlags)
-	-- Check for an appropriate icon for this unit
-	local raidTarget = bit_band(unitFlags, COMBATLOG_OBJECT_RAIDTARGET_MASK);
-	if (raidTarget == 0) then
-		return "";
-	end
+    -- Check for an appropriate icon for this unit
+    local raidTarget = bit_band(unitFlags, COMBATLOG_OBJECT_RAIDTARGET_MASK);
+    if (raidTarget == 0) then
+        return "";
+    end
 
     local iconBit = RaidIconMaskToIndex[raidTarget];
     local iconTexture = format("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_%d.blp:0|t", iconBit);
